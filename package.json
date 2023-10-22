@@ -1,7 +1,7 @@
 {
-  "name": "employee-api",
+  "name": "url-shortner",
   "version": "1.0.0",
-  "description": "",
+  "description": "this is a url shortner",
   "main": "index.ts",
   "scripts": {
     "prod": "npm run build && npm run start",
@@ -10,7 +10,7 @@
     "build": "tsc && tsc-alias -p tsconfig.json",
     "test": "cross-env NODE_ENV=test jest --testTimeout=9000"
   },
-  "author": "",
+  "author": "Precious Affiah",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.14",
