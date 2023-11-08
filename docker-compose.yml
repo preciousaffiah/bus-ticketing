@@ -16,6 +16,6 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: bus_transportation
       MYSQL_PASSWORD: 
-      MYSQL_ROOT_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: rootpassword
     ports:
       - "3306:3306"
