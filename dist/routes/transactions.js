@@ -8,6 +8,7 @@ const express_1 = require("express");
 const auth_1 = require("../middlewares/auth");
 const limiter_1 = __importDefault(require("../middlewares/limiter"));
 const transactionsRoutes = (0, express_1.Router)();
+transactionsRoutes.get("/gett", index_1.TransactionController.getAllTransactions);
 transactionsRoutes.get("/get-transactions", auth_1.authMiddleware, limiter_1.default, index_1.TransactionController.getMyTransactions);
 transactionsRoutes.post("/fund", auth_1.authMiddleware, limiter_1.default, index_1.TransactionController.creditMyAccount);
 transactionsRoutes.post("/ticket-pay", auth_1.authMiddleware, limiter_1.default, index_1.TransactionController.ticketPayment);
