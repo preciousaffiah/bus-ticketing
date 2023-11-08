@@ -50,6 +50,28 @@ export class TransactionController {
     }
   }
 
+  static async getAllTransactions(req: Request, res: Response) {
+    try {
+      //@ts-ignore
+      const id = req.user.id;
+      const page = Number(req.query.page) || 1;
+      const perPage = 20;
+      const currentYear = new Date().getFullYear();
+      const month = Number(req.query.month) || new Date().getMonth();
+
+      const myTransactions = await Transactions.findAll({
+
+      });
+
+      return successResponse({ data: myTransactions }, `Page ${page}.`, res);
+    } catch (err) {
+      console.log(err);
+
+      return errorResponse(err, res);
+    }
+  }
+  
+
   static async creditMyAccount(req: Request, res: Response) {
     try {
       //@ts-ignore
