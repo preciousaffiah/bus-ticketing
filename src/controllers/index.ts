@@ -1,3 +1,4 @@
-import { LinksController } from "./links";
+import { AuthController } from "./users";
+import { TransactionController } from "./transactions";
 
-export { LinksController };
+export { AuthController, TransactionController };

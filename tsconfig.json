@@ -11,12 +11,6 @@
     "strict": true,
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "paths": {
-      "@routes": ["routes"],
-      "@models": ["models"],
-      "@controllers": ["controllers"],
-      "@types*": ["types/index"]
-    },
     "typeRoots": ["node_modules/@types"],
     "lib": ["es6", "dom"],
     "resolveJsonModule": true

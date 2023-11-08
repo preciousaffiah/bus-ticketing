@@ -8,6 +8,3 @@
 
 # local env files
 .env
-
-# Api documentation files
-URL shortner.postman_collection.json

@@ -1,3 +1,7 @@
-import linksRoutes from "./links";
+import usersRoutes from "./users";
+import transactionsRoutes from "./transactions";
 
-export { linksRoutes };
+export { 
+    usersRoutes,
+    transactionsRoutes,
+}
