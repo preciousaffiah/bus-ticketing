@@ -1,5 +1,5 @@
 {
-  "name": "Bus Ticketing Platform",
+  "name": "Bus_Ticketing_Platform",
   "version": "1.0.0",
   "description": "this is a bus ticketing platform",
   "main": "index.ts",

@@ -11,7 +11,11 @@ services:
       - db
 
   db:
-    build:
-      context: ./mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: bus_transportation
+      MYSQL_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: 
     ports:
       - "3306:3306"
