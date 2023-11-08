@@ -1,4 +1,4 @@
-# BUSTICKETING
+# BUST ICKETING
 
 A bus ticketing platform that gives people the:
 
