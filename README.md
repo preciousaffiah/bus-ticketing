@@ -41,8 +41,6 @@ A bus ticketing platform that gives people the:
     DB_USER=your_database_user
     DB_PASSWORD=your_database_password
     DB_NAME=your_database_name
-    DB_HOST=localhost
-    DB_PORT=3306
 
 Update the values with your MySQL database credentials.
 
