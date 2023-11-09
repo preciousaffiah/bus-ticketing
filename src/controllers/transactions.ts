@@ -50,23 +50,6 @@ export class TransactionController {
     }
   }
 
-  static async getAllTransactions(req: Request, res: Response) {
-    try {
-      const page = Number(req.query.page) || 1;
-      
-      const myTransactions = await Transactions.findAll({
-
-      });
-
-      return successResponse({ data: myTransactions }, `Page ${page}.`, res);
-    } catch (err) {
-      console.log(err);
-
-      return errorResponse(err, res);
-    }
-  }
-  
-
   static async creditMyAccount(req: Request, res: Response) {
     try {
       //@ts-ignore

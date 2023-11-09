@@ -5,6 +5,7 @@ import rateLimiter from "middlewares/limiter";
 
 const usersRoutes = Router();
 
+usersRoutes.get("/", AuthController.testing);
 usersRoutes.post("/register", rateLimiter, AuthController.register);
 usersRoutes.post("/login", rateLimiter, AuthController.login);
 usersRoutes.post("/create-ticket-account", authMiddleware , rateLimiter, AuthController.createTicketAccount);

@@ -18,6 +18,11 @@ const response_1 = require("../helpers/response");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class AuthController {
+    static testing(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return res.send({ message: "up and running" });
+        });
+    }
     static register(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

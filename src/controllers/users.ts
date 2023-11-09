@@ -6,6 +6,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export class AuthController {
+  
+  static async testing(req: Request, res: Response) {
+   return res.send({ message:"up and running" })
+  }
+
   static async register(req: Request, res: Response) {
     try {
       const User = req.body as UserRegisterAttributes;

@@ -60,19 +60,6 @@ class TransactionController {
             }
         });
     }
-    static getAllTransactions(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const page = Number(req.query.page) || 1;
-                const myTransactions = yield index_1.Transactions.findAll({});
-                return (0, response_1.successResponse)({ data: myTransactions }, `Page ${page}.`, res);
-            }
-            catch (err) {
-                console.log(err);
-                return (0, response_1.errorResponse)(err, res);
-            }
-        });
-    }
     static creditMyAccount(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

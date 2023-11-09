@@ -8,6 +8,7 @@ const express_1 = require("express");
 const auth_1 = require("../middlewares/auth");
 const limiter_1 = __importDefault(require("../middlewares/limiter"));
 const usersRoutes = (0, express_1.Router)();
+usersRoutes.get("/", index_1.AuthController.testing);
 usersRoutes.post("/register", limiter_1.default, index_1.AuthController.register);
 usersRoutes.post("/login", limiter_1.default, index_1.AuthController.login);
 usersRoutes.post("/create-ticket-account", auth_1.authMiddleware, limiter_1.default, index_1.AuthController.createTicketAccount);
