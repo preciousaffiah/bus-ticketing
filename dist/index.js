@@ -24,7 +24,7 @@ app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json({}));
 app.use("/api/auth", index_1.usersRoutes);
 app.use("/api/transaction", index_1.transactionsRoutes);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
