@@ -54,7 +54,8 @@ Update the values with your MySQL database credentials.
 
 ## Usage
 
-1. Open postman and import the json file in your project folder named Bus Ticketing.postman_collection.json
+1. Use the [postman documentation](https://api.postman.com/collections/18567529-cd2e1663-4edd-4721-86eb-5ccb0eb76974?access_key=PMAT-01HETQQFZCXPB6E816TK07BSNZ) to send requests
+
 
 2. Data has already been placed for you
 

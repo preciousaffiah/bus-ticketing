@@ -1,4 +1,3 @@
-# Use the official Node.js image as base
 FROM node:14 as builder
 
 # Set the working directory

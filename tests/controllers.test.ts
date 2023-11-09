@@ -1,6 +1,6 @@
 import request from "supertest";
 
-const app = 'http://localhost:3000/api'
+const app = 'http://localhost:4000/api'
 
 let authToken: string;
 
