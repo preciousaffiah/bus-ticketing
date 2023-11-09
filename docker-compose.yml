@@ -1,0 +1,28 @@
+version: '3'
+services:
+  # MySQL database service
+  db:
+    image: mysql:8
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  # Node.js application service
+  app:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
