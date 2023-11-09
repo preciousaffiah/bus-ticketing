@@ -1,6 +1,5 @@
 version: '3'
-services:
-  # MySQL database service
+services: # MySQL database service
   db:
     image: mysql:8
     env_file:
@@ -15,7 +14,7 @@ services:
     build:
       context: .
     ports:
-      - "3000:3000"
+      - "3001:3000"
     depends_on:
       - db
     env_file:
