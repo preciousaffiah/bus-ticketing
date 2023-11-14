@@ -1,16 +1,27 @@
 version: '3'
-services:
+services: # MySQL database service
+  db:
+    image: mongo
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
   # Node.js application service
-  web:
-    build: .
+  app:
+    build:
+      context: .
     ports:
       - "4000:4000"
     depends_on:
-      - mongo
-    environment:
-      MONGO_URI: "mongodb+srv://preciousaffiah205:para2saha@cluster0.ojepall.mongodb.net/?retryWrites=true&w=majority"
+      - db
+    env_file:
+      - .env
+    networks:
+      - app-network
 
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
+networks:
+  app-network:
+    driver: bridge
