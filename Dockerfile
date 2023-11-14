@@ -1,7 +1,7 @@
 FROM node:14
 
 # Set the working directory
-WORKDIR /src/index
+WORKDIR /index
 
 # Copy package.json and package-lock.json to the working directory
 COPY package.json .
