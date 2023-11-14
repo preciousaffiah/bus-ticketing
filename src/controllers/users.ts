@@ -8,7 +8,8 @@ import jwt from "jsonwebtoken";
 export class AuthController {
   
   static async testing(req: Request, res: Response) {
-   return res.send({ message:"up and running" })
+    const Allusers = await Users.find();
+   return res.send({ data:Allusers })
   }
 
   static async register(req: Request, res: Response) {

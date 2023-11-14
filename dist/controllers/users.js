@@ -20,7 +20,8 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class AuthController {
     static testing(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            return res.send({ message: "up and running" });
+            const Allusers = yield index_1.Users.find();
+            return res.send({ data: Allusers });
         });
     }
     static register(req, res) {

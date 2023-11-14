@@ -1,27 +1,7 @@
-version: '3'
-services: # MySQL database service
-  db:
-    image: mongo
-    env_file:
-      - .env
+version: '3.8'
+services:
+  api:
+    build: .
     ports:
-      - "27017:27017"
-    networks:
-      - app-network
-
-  # Node.js application service
-  app:
-    build:
-      context: .
-    ports:
-      - "4000:4000"
-    depends_on:
-      - db
-    env_file:
-      - .env
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - 4000:4000
+      
