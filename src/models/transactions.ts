@@ -1,54 +1,26 @@
-import { Model, DataTypes } from "sequelize";
-import type { AbstractDataTypeConstructor } from "sequelize/types";
-import sequelize from "../config/db";
+import mongoose, { ObjectId } from "mongoose";
 
-class Transactions extends Model {
-  declare id: AbstractDataTypeConstructor;
-  declare from: string;
-  declare to: string;
-  declare amount: number;
-  declare description: string;
-  declare balance: number;
-  declare readonly createdAt: Date;
-  declare readonly updatedAt: Date;
+export interface TransationsDocument extends mongoose.Document {
+  _id: ObjectId;
+  from: ObjectId;
+  to: ObjectId | null;
+  amount: number;
+  description: string;
+  balance: number;
+  createdAt: Date;
+  updatedAt: Date | null;
 }
 
-Transactions.init(
-  {
-    id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
-    },
-    from: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
-    to: {
-      type: DataTypes.UUID,
-      allowNull: true,
-    },
-    amount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    balance: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0.00,
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  },
-  {
-    tableName: "Transactions",
-    sequelize,
-    timestamps: true,
-  }
-);
+const TransactionsSchema = new mongoose.Schema<TransationsDocument>({
+  from: { type: mongoose.Schema.Types.ObjectId, ref: "TicketAccounts", required: true },
+  to: { type: mongoose.Schema.Types.ObjectId, ref: "TicketAccounts", required: false },
+  amount: { type: Number, required: true },
+  description: { type: String, required: true },
+  balance: { type: Number, required: true },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+});
+
+const Transactions = mongoose.model<TransationsDocument>("Transactions", TransactionsSchema);
+
 export default Transactions;

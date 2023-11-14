@@ -1,47 +1,22 @@
-import { Model, DataTypes, } from "sequelize";
-import type { AbstractDataTypeConstructor } from "sequelize/types";
-import sequelize from "../config/db";
+import mongoose, { ObjectId } from "mongoose";
 
-class Users extends Model {
-  declare id: AbstractDataTypeConstructor;
-  declare fullname: string;
-  declare email: string;
-  declare mobile: string;
-  declare password: string;
-  declare readonly createdAt: Date;
+export interface UsersDocument extends mongoose.Document {
+  _id: ObjectId;
+  fullname: string;
+  email: string;
+  mobile: string;
+  password: string;
+  createdAt: Date;
 }
 
-Users.init(
-  {
-    id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
-    },
-    fullname: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    mobile: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    createdAt: DataTypes.DATE,
-  },
-  {
-    tableName: "Users",
-    sequelize,
-    timestamps: true,
-  }
-);
+const usersSchema = new mongoose.Schema<UsersDocument>({
+  fullname: { type: String, required: true },
+  email: { type: String, required: true },
+  mobile: { type: String, required: true },
+  password: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+const Users = mongoose.model<UsersDocument>("Users", usersSchema);
 
 export default Users;

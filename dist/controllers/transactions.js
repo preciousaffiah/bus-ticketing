@@ -8,15 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionController = void 0;
 const index_1 = require("../models/index");
 const response_1 = require("../helpers/response");
-const sequelize_1 = require("sequelize");
-const db_1 = __importDefault(require("../config/db"));
 class TransactionController {
     static getMyTransactions(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27,26 +22,21 @@ class TransactionController {
                 const perPage = 20;
                 const currentYear = new Date().getFullYear();
                 const month = Number(req.query.month) || new Date().getMonth();
-                const myTicketAccount = yield index_1.TicketAccounts.findOne({
-                    where: { userId: id },
-                });
+                const myTicketAccount = yield index_1.TicketAccounts.findOne({ userId: id });
                 if (!myTicketAccount) {
                     return res.status(404).json({
                         message: "You do not have a ticket account, Please create one.",
                     });
                 }
-                const myTransactions = yield index_1.Transactions.findAll({
-                    where: {
-                        [sequelize_1.Op.or]: [{ from: myTicketAccount.id }, { to: myTicketAccount.id }],
-                        [sequelize_1.Op.and]: [
-                            db_1.default.where(db_1.default.fn("MONTH", db_1.default.col("createdAt")), month),
-                            db_1.default.where(db_1.default.fn("YEAR", db_1.default.col("createdAt")), currentYear),
-                        ],
-                    },
-                    offset: (page - 1) * perPage,
-                    limit: perPage,
-                    order: [['createdAt', 'DESC']],
-                });
+                const myTransactions = yield index_1.Transactions.find()
+                    .where({ $or: [{ from: myTicketAccount._id },
+                        { to: myTicketAccount._id }],
+                })
+                    .populate("from", ["fullname"])
+                    .populate("to", ["fullname"])
+                    .sort({ _id: -1 })
+                    .skip((page - 1) * perPage)
+                    .limit(perPage);
                 if (myTransactions.length === 0) {
                     return res.status(200).json({
                         message: "You have no transactions record.",
@@ -66,9 +56,7 @@ class TransactionController {
                 //@ts-ignore
                 const id = req.user.id;
                 const amount = req.body.amount;
-                const myTicketAccount = yield index_1.TicketAccounts.findOne({
-                    where: { userId: id },
-                });
+                const myTicketAccount = yield index_1.TicketAccounts.findOne({ userId: id });
                 if (!myTicketAccount) {
                     return res.status(404).json({
                         message: "You do not have a ticket account, Please create one.",
@@ -77,7 +65,7 @@ class TransactionController {
                 myTicketAccount.balance = myTicketAccount.balance + amount;
                 yield myTicketAccount.save();
                 const credit = yield index_1.Transactions.create({
-                    from: "funder",
+                    from: myTicketAccount.id,
                     to: myTicketAccount.id,
                     amount: amount,
                     description: "funded my account",
@@ -98,9 +86,7 @@ class TransactionController {
                 const id = req.user.id;
                 const amount = req.body.amount;
                 const to = req.body.to;
-                const myTicketAccount = yield index_1.TicketAccounts.findOne({
-                    where: { userId: id },
-                });
+                const myTicketAccount = yield index_1.TicketAccounts.findOne({ userId: id });
                 if (!myTicketAccount) {
                     return res.status(404).json({
                         message: "You do not have a ticket account, Please create one.",
@@ -111,7 +97,7 @@ class TransactionController {
                         message: "You cannot transfer money to yourself.",
                     });
                 }
-                const recipient = yield index_1.TicketAccounts.findOne({ where: { id: to } });
+                const recipient = yield index_1.TicketAccounts.findOne({ _id: to });
                 if (!recipient) {
                     return res.status(404).json({
                         message: "The ticket account you're trying to send money to does not exist.",
@@ -130,10 +116,10 @@ class TransactionController {
                     description: `transfer to ${to}`,
                     balance: myTicketAccount.balance - amount,
                 });
-                yield myTicketAccount.update({
+                yield myTicketAccount.updateOne({
                     balance: myTicketAccount.balance - amount,
                 });
-                yield recipient.update({ balance: recipient.balance + amount });
+                yield recipient.updateOne({ balance: recipient.balance + amount });
                 return (0, response_1.successResponse)({ data: transfer }, "Transaction Successful.", res);
             }
             catch (err) {
@@ -146,9 +132,7 @@ class TransactionController {
             try {
                 //@ts-ignore
                 const id = req.user.id;
-                const myTicketAccount = yield index_1.TicketAccounts.findOne({
-                    where: { userId: id },
-                });
+                const myTicketAccount = yield index_1.TicketAccounts.findOne({ userId: id });
                 if (!myTicketAccount) {
                     return res.status(404).json({
                         message: "You do not have a ticket account, Please create one.",
@@ -168,9 +152,7 @@ class TransactionController {
                 const id = req.user.id;
                 const amount = req.body.amount;
                 const destination = req.body.destination;
-                const myTicketAccount = yield index_1.TicketAccounts.findOne({
-                    where: { userId: id },
-                });
+                const myTicketAccount = yield index_1.TicketAccounts.findOne({ userId: id });
                 if (!myTicketAccount) {
                     return res.status(404).json({
                         message: "You do not have a ticket account, Please create one.",
@@ -185,7 +167,6 @@ class TransactionController {
                 yield myTicketAccount.save();
                 const pay = yield index_1.Transactions.create({
                     from: myTicketAccount.id,
-                    to: "admin",
                     // type: 'debit',
                     amount: amount,
                     description: `payment for ticket to ${destination}`,

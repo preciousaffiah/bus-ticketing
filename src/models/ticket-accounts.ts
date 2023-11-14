@@ -1,43 +1,20 @@
-import { Model, DataTypes } from "sequelize";
-import type { AbstractDataTypeConstructor } from "sequelize/types";
-import sequelize from "../config/db";
+import mongoose, { ObjectId } from "mongoose";
 
-class TicketAccounts extends Model {
-  declare id: AbstractDataTypeConstructor;
-  declare userId: string;
-  declare balance: number;
-  declare readonly createdAt: Date;
-  declare readonly updatedAt: Date;
+export interface TicketAccountsDocument extends mongoose.Document {
+  _id: ObjectId;
+  userId: ObjectId;
+  balance: number;
+  createdAt: Date;
+  updatedAt: Date | null;
 }
 
-TicketAccounts.init(
-  {
-    id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
-    },
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-          model: 'Users',
-          key: 'id',
-      }
-    },
-    balance: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0.00,
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  },
-  {
-    tableName: "TicketAccounts",
-    sequelize,
-    timestamps: true,
-  }
-);
+const TicketAccountsSchema = new mongoose.Schema<TicketAccountsDocument>({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true },
+  balance: { type: Number, ref: "Transactions", default: 0.00, required: true },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+});
+
+const TicketAccounts = mongoose.model<TicketAccountsDocument>("TicketAccounts", TicketAccountsSchema);
+
 export default TicketAccounts;

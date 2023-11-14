@@ -1,27 +1,13 @@
 version: '3'
-services: # MySQL database service
-  db:
-    image: mysql:8
-    env_file:
-      - .env
-    ports:
-      - "3306:3306"
-    networks:
-      - app-network
-
+services:
   # Node.js application service
-  app:
-    build:
-      context: .
+  web:
+    build: .
     ports:
-      - "3001:3000"
+      - "4000:4000"
     depends_on:
-      - db
-    env_file:
-      - .env
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - mongo
+mongo:
+  image: mongo
+  ports:
+    - "27017:27017"

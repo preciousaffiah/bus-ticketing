@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import sequelize from "./config/db";
+import mongoose from "mongoose";
 import { transactionsRoutes, usersRoutes } from "./routes/index";
+
 
 dotenv.config();
 
@@ -14,17 +15,17 @@ app.use(bodyParser.json({}));
 app.use("/api/auth", usersRoutes);
 app.use("/api/transaction", transactionsRoutes);
 
+
 const PORT = process.env.PORT || 4000;
-
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
-
-(async () => {
-  await sequelize.authenticate()
-  await sequelize.sync({ force: false })
-    .then((r) => console.log("Connection has been established successfully."))
-    .catch((e) => console.error("Unable to connect to the database:", e));
-})();
+mongoose
+  .connect(process.env.MONGODB_URI || "")
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
 
 export default app;

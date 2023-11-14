@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { TicketAccounts, Transactions, Users } from "../models/index";
+import { TicketAccounts, Transactions } from "../models/index";
 import { errorResponse, successResponse } from "../helpers/response";
-import { Op } from "sequelize";
-import sequelize from "config/db";
 
 export class TransactionController {
   static async getMyTransactions(req: Request, res: Response) {
@@ -14,27 +12,23 @@ export class TransactionController {
       const currentYear = new Date().getFullYear();
       const month = Number(req.query.month) || new Date().getMonth();
 
-      const myTicketAccount = await TicketAccounts.findOne({
-        where: { userId: id },
-      });
+      const myTicketAccount = await TicketAccounts.findOne({ userId: id });
       if (!myTicketAccount) {
         return res.status(404).json({
           message: "You do not have a ticket account, Please create one.",
         });
       }
 
-      const myTransactions = await Transactions.findAll({
-        where: {
-          [Op.or]: [{ from: myTicketAccount.id }, { to: myTicketAccount.id }],
-          [Op.and]: [
-            sequelize.where(sequelize.fn("MONTH", sequelize.col("createdAt")), month),
-            sequelize.where(sequelize.fn("YEAR", sequelize.col("createdAt")), currentYear),
-          ],
-        },
-        offset: (page - 1) * perPage,
-        limit: perPage,
-        order: [['createdAt', 'DESC']],
-      });
+    const myTransactions = await Transactions.find()
+      .where({ $or: 
+        [{ from: myTicketAccount._id },
+        { to: myTicketAccount._id }],
+        })
+      .populate("from", ["fullname"])
+      .populate("to", ["fullname"])
+      .sort({ _id: -1 })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
 
       if (myTransactions.length === 0) {
         return res.status(200).json({
@@ -56,9 +50,7 @@ export class TransactionController {
       const id = req.user.id;
       const amount: number = req.body.amount;
 
-      const myTicketAccount = await TicketAccounts.findOne({
-        where: { userId: id },
-      });
+      const myTicketAccount = await TicketAccounts.findOne({ userId: id });
       if (!myTicketAccount) {
         return res.status(404).json({
           message: "You do not have a ticket account, Please create one.",
@@ -69,7 +61,7 @@ export class TransactionController {
       await myTicketAccount.save();
 
       const credit = await Transactions.create({
-        from: "funder",
+        from: myTicketAccount.id,
         to: myTicketAccount.id,
         amount: amount,
         description: "funded my account",
@@ -95,9 +87,7 @@ export class TransactionController {
       const amount = req.body.amount as number;
       const to = req.body.to;
 
-      const myTicketAccount = await TicketAccounts.findOne({
-        where: { userId: id },
-      });
+      const myTicketAccount = await TicketAccounts.findOne({ userId: id });
       if (!myTicketAccount) {
         return res.status(404).json({
           message: "You do not have a ticket account, Please create one.",
@@ -110,7 +100,7 @@ export class TransactionController {
         });
       }
 
-      const recipient = await TicketAccounts.findOne({ where: { id: to } });
+      const recipient = await TicketAccounts.findOne({ _id: to });
       if (!recipient) {
         return res.status(404).json({
           message:
@@ -131,12 +121,12 @@ export class TransactionController {
         // type: 'debit',
         description: `transfer to ${to}`,
         balance: myTicketAccount.balance - amount,
-      });
+      })
 
-      await myTicketAccount.update({
+      await myTicketAccount.updateOne({
         balance: myTicketAccount.balance - amount,
       });
-      await recipient.update({ balance: recipient.balance + amount });
+      await recipient.updateOne({ balance: recipient.balance + amount });
 
       return successResponse(
         { data: transfer },
@@ -153,9 +143,7 @@ export class TransactionController {
       //@ts-ignore
       const id = req.user.id;
 
-      const myTicketAccount = await TicketAccounts.findOne({
-        where: { userId: id },
-      });
+      const myTicketAccount = await TicketAccounts.findOne({ userId: id });
       if (!myTicketAccount) {
         return res.status(404).json({
           message: "You do not have a ticket account, Please create one.",
@@ -179,9 +167,7 @@ export class TransactionController {
       const amount = req.body.amount;
       const destination = req.body.destination;
 
-      const myTicketAccount = await TicketAccounts.findOne({
-        where: { userId: id },
-      });
+      const myTicketAccount = await TicketAccounts.findOne({ userId: id });
 
       if (!myTicketAccount) {
         return res.status(404).json({
@@ -200,7 +186,6 @@ export class TransactionController {
 
       const pay = await Transactions.create({
         from: myTicketAccount.id,
-        to: "admin",
         // type: 'debit',
         amount: amount,
         description: `payment for ticket to ${destination}`,

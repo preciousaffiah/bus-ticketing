@@ -15,15 +15,13 @@ export class AuthController {
     try {
       const User = req.body as UserRegisterAttributes;
 
-      const takenEmail = await Users.findOne({ where: { email: User.email } });
+      const takenEmail = await Users.findOne({ email: User.email });
       if (takenEmail) {
         return res.status(400).json({
           message: "This email has already been used. Try another one.",
         });
       }
-      const takenMobile = await Users.findOne({
-        where: { mobile: User.mobile },
-      });
+      const takenMobile = await Users.findOne({ mobile: User.mobile });
       if (takenMobile) {
         return res.status(400).json({
           message: "This mobile number has already been used. Try another one.",
@@ -60,9 +58,7 @@ export class AuthController {
     try {
       const User = req.body as UserLoginAttributes;
 
-      const user = await Users.findOne({
-        where: { email: User.email.toLowerCase() },
-      });
+      const user = await Users.findOne({ email: User.email.toLowerCase() });
 
       if (!user) {
         return res.status(404).json({
@@ -99,9 +95,7 @@ export class AuthController {
       //@ts-ignore
       const id = req.user.id;
 
-      const ticketAccountExists = await TicketAccounts.findOne({
-        where: { userId: id },
-      });
+      const ticketAccountExists = await TicketAccounts.findOne({ userId: id });
 
       if (ticketAccountExists) {
         return res.status(400).json({
@@ -115,6 +109,7 @@ export class AuthController {
 
       return successResponse({ data: ticketAccount }, "Bus ticket account created.", res);
     } catch (err) {
+      console.log(err)
       return errorResponse(err, res);
     }
   }

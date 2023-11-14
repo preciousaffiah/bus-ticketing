@@ -27,15 +27,13 @@ class AuthController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const User = req.body;
-                const takenEmail = yield index_1.Users.findOne({ where: { email: User.email } });
+                const takenEmail = yield index_1.Users.findOne({ email: User.email });
                 if (takenEmail) {
                     return res.status(400).json({
                         message: "This email has already been used. Try another one.",
                     });
                 }
-                const takenMobile = yield index_1.Users.findOne({
-                    where: { mobile: User.mobile },
-                });
+                const takenMobile = yield index_1.Users.findOne({ mobile: User.mobile });
                 if (takenMobile) {
                     return res.status(400).json({
                         message: "This mobile number has already been used. Try another one.",
@@ -65,9 +63,7 @@ class AuthController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const User = req.body;
-                const user = yield index_1.Users.findOne({
-                    where: { email: User.email.toLowerCase() },
-                });
+                const user = yield index_1.Users.findOne({ email: User.email.toLowerCase() });
                 if (!user) {
                     return res.status(404).json({
                         message: "This account does not exist",
@@ -95,9 +91,7 @@ class AuthController {
             try {
                 //@ts-ignore
                 const id = req.user.id;
-                const ticketAccountExists = yield index_1.TicketAccounts.findOne({
-                    where: { userId: id },
-                });
+                const ticketAccountExists = yield index_1.TicketAccounts.findOne({ userId: id });
                 if (ticketAccountExists) {
                     return res.status(400).json({
                         message: "Ticket account already exists"
@@ -109,6 +103,7 @@ class AuthController {
                 return (0, response_1.successResponse)({ data: ticketAccount }, "Bus ticket account created.", res);
             }
             catch (err) {
+                console.log(err);
                 return (0, response_1.errorResponse)(err, res);
             }
         });

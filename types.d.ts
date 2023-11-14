@@ -1,8 +1,8 @@
 import { Request } from "express";
-import { UUID } from "sequelize/types";
+import { ObjectId } from "mongoose";
 
 export interface UserRegisterAttributes {
-  id: typeof UUID;
+  id: ObjectId;
   fullname: string;
   email: string;
   mobile: string;
