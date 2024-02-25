@@ -38,12 +38,10 @@ A bus ticketing platform that gives people the:
     ```dotenv
     JWT_SECRET=secret
     MONGODB_URI=mongodb_uri
-Update the values with your MySQL database credentials.
+Update the values with yours.
 
-5. Open your XAMPP and start Apache and MySQL and create a database with the name you specified in 
-    your '.env' file.
 
-7. Start the application:
+5. Start the application:
     ```bash
     npm start
 
