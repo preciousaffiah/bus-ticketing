@@ -50,7 +50,7 @@ Update the values with your MySQL database credentials.
 
 ## Usage
 
-1. Use the [postman documentation](https://lively-meadow-916190.postman.co/workspace/Team-Workspace~a5162da0-008b-430e-8287-3ff7cd09c691/collection/18567529-3a0cb709-dad0-4cc0-ad06-3d3f70c98a5c?action=share&creator=18567529) to send requests
+1. Use the [API postman documentation](https://lively-meadow-916190.postman.co/workspace/Team-Workspace~a5162da0-008b-430e-8287-3ff7cd09c691/collection/18567529-3a0cb709-dad0-4cc0-ad06-3d3f70c98a5c?action=share&creator=18567529) to send requests
 
 3. Data has already been placed for you
 
