@@ -36,12 +36,8 @@ A bus ticketing platform that gives people the:
 
 4. Create a '.env' file in the project root with the following environment variables:
     ```dotenv
-    PORT=port
     JWT_SECRET=secret
-    DB_USER=your_database_user
-    DB_PASSWORD=your_database_password
-    DB_NAME=your_database_name
-
+    MONGODB_URI=mongodb_uri
 Update the values with your MySQL database credentials.
 
 5. Open your XAMPP and start Apache and MySQL and create a database with the name you specified in 
@@ -60,7 +56,7 @@ Update the values with your MySQL database credentials.
 
 4. Log in or register and copy the token that returned with the users data
 
-5. Update the 'AuthToken' environment variable with that token or just paste the token
+5. Update the 'token' variable in the 'bus ticketing' environment with that token or just paste the token
    in the header when making a request
 
 6. Go ahead and make other requests!
