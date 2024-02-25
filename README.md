@@ -1,4 +1,4 @@
-# BUST ICKETING
+# BUS TICKETING
 
 A bus ticketing platform that gives people the:
 
@@ -54,17 +54,16 @@ Update the values with your MySQL database credentials.
 
 ## Usage
 
-1. Use the [postman documentation](https://api.postman.com/collections/18567529-cd2e1663-4edd-4721-86eb-5ccb0eb76974?access_key=PMAT-01HETQQFZCXPB6E816TK07BSNZ) to send requests
+1. Use the [postman documentation](https://lively-meadow-916190.postman.co/workspace/Team-Workspace~a5162da0-008b-430e-8287-3ff7cd09c691/collection/18567529-3a0cb709-dad0-4cc0-ad06-3d3f70c98a5c?action=share&creator=18567529) to send requests
 
+3. Data has already been placed for you
 
-2. Data has already been placed for you
+4. Log in or register and copy the token that returned with the users data
 
-3. Log in or register and copy the token that returned with the users data
-
-4. Update the 'AuthToken' environment variable with that token or just paste the token
+5. Update the 'AuthToken' environment variable with that token or just paste the token
    in the header when making a request
 
-5. Go ahead and make other requests!
+6. Go ahead and make other requests!
 
 
 ## Test
