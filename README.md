@@ -13,7 +13,6 @@ A bus ticketing platform that gives people the:
 ## Prerequisites
 
 - Node.js installed
-- XAMPP installed
 - Git installed
 - Postman installed
 - A code editor (e.g Visual Studio Code)
