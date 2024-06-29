@@ -1,13 +1,13 @@
 # BUS TICKETING
 
-A bus ticketing platform that gives people the:
+A bus ticketing platform that gives people the ability to:
 
-* Ability to create an account on the platform
-* Ability to log in and create a bus ticket ID for the user
-* Ability to credit their bus ticket account (id) (no payment gateway)
-* Ability to pay for a ticket via their account
-* Ability to view all their transactions (in and out) and query per date(month)
-* Ability to send another user credit from their account.
+* Create an account on the platform
+* Log in and create a bus ticket ID for the user
+* Credit their bus ticket account (id) (no payment gateway)
+* Pay for a ticket via their account
+* View all their transactions (in and out) and query per date(month)
+* Send another user credit from their account.
  
 
 ## Prerequisites
